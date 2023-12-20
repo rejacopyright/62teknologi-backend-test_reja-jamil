@@ -22,6 +22,14 @@ php artisan db:seed --class=BusinessSeeder
 ```
 
 ##
+## DATABASE
+
+
+```sh
+MySQL
+```
+
+##
 ## GET CLIENT TOKEN
 
 
