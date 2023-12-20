@@ -192,13 +192,27 @@ class BusinessController extends Controller
         $business = business::findOrFail($id);
         $business_name = $business->name;
         $business->name = $r->name;
-        $business->location_id = $r->location_id ?? location::first()->id;
-        $business->category_id = $r->category_id ?? categories::first()->id;
-        $business->term_id = $r->term_id ?? term::first()->id;
-        $business->attribute_ids = $r->attribute_ids ?? attributes::limit(10)->distinct('id')->pluck('id')->all();
-        $business->address = $r->address;
-        $business->latitude = $r->latitude;
-        $business->longitude = $r->longitude;
+        if ($r->has('location_id')) {
+            $business->location_id = $r->location_id ?? location::first()->id;
+        }
+        if ($r->has('category_id')) {
+            $business->category_id = $r->category_id ?? categories::first()->id;
+        }
+        if ($r->has('term_id')) {
+            $business->term_id = $r->term_id ?? term::first()->id;
+        }
+        if ($r->has('attribute_ids')) {
+            $business->attribute_ids = $r->attribute_ids ?? attributes::limit(10)->distinct('id')->pluck('id')->all();
+        }
+        if ($r->has('address')) {
+            $business->address = $r->address;
+        }
+        if ($r->has('latitude')) {
+            $business->latitude = $r->latitude;
+        }
+        if ($r->has('longitude')) {
+            $business->longitude = $r->longitude;
+        }
         $business->save();
         return response()->json(['status' => 200, 'success' => true, 'message' => "Berhasil mengubah $business_name", 'data' => $business]);
     }
